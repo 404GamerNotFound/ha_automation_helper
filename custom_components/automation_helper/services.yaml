@@ -1,0 +1,151 @@
+# Describes the services provided by the Automation Helper integration
+
+generate_automation:
+  name: Generate automation
+  description: >-
+    Create a structured Home Assistant automation file with consistent formatting
+    and store it inside the automation_helper directory. This service is intended
+    to help users maintain code-based automations by generating scaffolding that
+    follows common conventions.
+  fields:
+    alias:
+      name: Alias
+      description: Name of the automation.
+      example: Turn on hallway lights when motion detected
+      selector:
+        text:
+          multiline: false
+    description:
+      name: Description
+      description: Optional description for the automation.
+      required: false
+      example: Handles turning on hallway lights when motion is detected.
+      selector:
+        text:
+          multiline: true
+    mode:
+      name: Mode
+      description: Execution mode for the automation.
+      default: single
+      example: queued
+      selector:
+        select:
+          options:
+            - single
+            - restart
+            - queued
+            - parallel
+    filename:
+      name: Filename
+      description: Optional custom filename for the generated YAML file.
+      required: false
+      example: hallway_motion.yaml
+      selector:
+        text:
+          multiline: false
+    overwrite:
+      name: Overwrite existing file
+      description: Allow overwriting of an existing automation file with the same name.
+      default: false
+      selector:
+        boolean:
+    trigger:
+      name: Trigger
+      description: >-
+        A list of trigger dictionaries following the automation trigger schema.
+      example:
+        - platform: state
+          entity_id: binary_sensor.hallway_motion
+          to: "on"
+      required: true
+      selector:
+        object:
+    condition:
+      name: Condition
+      description: Optional list of conditions.
+      example:
+        - condition: time
+          after: "22:00:00"
+      required: false
+      selector:
+        object:
+    action:
+      name: Action
+      description: >-
+        A list of action dictionaries that make up the automation body.
+      example:
+        - service: light.turn_on
+          target:
+            entity_id: light.hallway
+      required: true
+      selector:
+        object:
+
+generate_package:
+  name: Generate package scaffolding
+  description: >-
+    Create a Home Assistant packages folder with ready-to-edit automation,
+    script, scene, and blueprint files. Use this to keep large codebases
+    consistent and avoid repetitive manual setup when starting a new area or
+    feature.
+  fields:
+    name:
+      name: Package name
+      description: Friendly name for the package. Used to derive the folder name.
+      example: hallway_lighting
+      required: true
+      selector:
+        text:
+          multiline: false
+    description:
+      name: Description
+      description: Optional description that will be stored in README.md and comments.
+      required: false
+      selector:
+        text:
+          multiline: true
+    overwrite:
+      name: Overwrite existing files
+      description: Allow replacing any files that already exist in the package directory.
+      default: false
+      selector:
+        boolean:
+    include_example:
+      name: Include example entries
+      description: Generate example automation/script/scene content.
+      default: true
+      selector:
+        boolean:
+    include_scripts:
+      name: Include scripts.yaml
+      description: Create a scripts file with optional example content.
+      default: true
+      selector:
+        boolean:
+    include_scenes:
+      name: Include scenes.yaml
+      description: Create a scenes file with optional example content.
+      default: false
+      selector:
+        boolean:
+    include_readme:
+      name: Include README.md
+      description: Document the package contents in a README file.
+      default: true
+      selector:
+        boolean:
+    include_blueprint:
+      name: Include blueprint
+      description: Generate a reusable automation or script blueprint.
+      default: false
+      selector:
+        boolean:
+    blueprint_domain:
+      name: Blueprint domain
+      description: Choose the domain for the generated blueprint when enabled.
+      default: automation
+      selector:
+        select:
+          options:
+            - automation
+            - script
