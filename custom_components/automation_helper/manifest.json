@@ -1,0 +1,10 @@
+{
+  "domain": "automation_helper",
+  "name": "Automation Helper",
+  "documentation": "https://github.com/example/ha_automation_helper",
+  "issue_tracker": "https://github.com/example/ha_automation_helper/issues",
+  "dependencies": [],
+  "codeowners": ["@your-github"],
+  "requirements": [],
+  "version": "0.2.0"
+}

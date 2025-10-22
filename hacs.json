@@ -1,0 +1,6 @@
+{
+  "name": "Automation Helper",
+  "content_in_root": false,
+  "filename": "custom_components/automation_helper/__init__.py",
+  "render_readme": true
+}
